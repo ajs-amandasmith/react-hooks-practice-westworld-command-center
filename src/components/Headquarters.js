@@ -15,7 +15,7 @@ function Headquarters({ hostData, selectedHost, handleSelectedHost }) {
         />
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details />
+        <Details selectedHost={selectedHost} />
       </Grid.Column>
       <Grid.Column width={3}>
         {/* and here. Take visual cues from the screenshot/video in the Readme. */}
