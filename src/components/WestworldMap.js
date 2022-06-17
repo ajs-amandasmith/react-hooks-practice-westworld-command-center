@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Segment } from "semantic-ui-react";
 import Area from "./Area";
 
-function WestworldMap() {
+function WestworldMap({ hostData }) {
   const [areaData, setAreaData] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function WestworldMap() {
   }, [])
 
   const displayAreas = areaData.map(area => (
-    <Area area={area} />
+    <Area key ={area.id} area={area} hostData={hostData} />
   ))
 
   return (

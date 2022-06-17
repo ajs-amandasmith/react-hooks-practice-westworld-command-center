@@ -1,7 +1,7 @@
 import React from "react";
 import "../stylesheets/Area.css";
 
-function Area({ area }) {
+function Area({ area, hostData }) {
   const cleanName = area.name.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
   return (
     <div
