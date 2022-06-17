@@ -1,16 +1,15 @@
 import React from "react";
 import "../stylesheets/Area.css";
 
-function Area() {
+function Area({ area }) {
+  const cleanName = area.name.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
   return (
     <div
       className="area"
-      id={
-        /* Pass in the area name here to make sure this is styled correctly */ "id"
-      }
+      id={area.name}
     >
       <h3 className="labels">
-        {/* Don't just pass in the name from the data...clean that thing up */}
+        {cleanName}
       </h3>
       {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
     </div>
