@@ -6,6 +6,7 @@ import Headquarters from "./Headquarters";
 
 function App() {
   const [hostData, setHostData] = useState([]);
+  const [selectedHost, setSelectedHost] = useState('');
 
   useEffect(() => {
     fetch("http://localhost:3001/hosts")
@@ -13,11 +14,19 @@ function App() {
       .then(hosts => setHostData(hosts))
   }, [])
 
+  const handleSelectedHost = (host) => {
+    setSelectedHost(host)
+  }
+
   return (
     <Segment id="app">
       {/* What components should go here? Check out Checkpoint 1 of the Readme if you're confused */}
       <WestworldMap hostData={hostData} />
-      <Headquarters hostData={hostData} />
+      <Headquarters 
+        hostData={hostData} 
+        selectedHost={selectedHost} 
+        handleSelectedHost={handleSelectedHost} 
+      />
     </Segment>
   );
 }

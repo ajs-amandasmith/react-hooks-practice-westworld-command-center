@@ -4,10 +4,16 @@ import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage"
 
-function Headquarters({ hostData }) {
+function Headquarters({ hostData, selectedHost, handleSelectedHost }) {
   return (
     <Grid celled="internally">
-      <Grid.Column width={8}>{/* Something goes here.... */}<ColdStorage hostData={hostData} /></Grid.Column>
+      <Grid.Column width={8}>
+        <ColdStorage 
+          hostData={hostData} 
+          selectedHost={selectedHost} 
+          handleSelectedHost={handleSelectedHost} 
+        />
+      </Grid.Column>
       <Grid.Column width={5}>
         <Details />
       </Grid.Column>
