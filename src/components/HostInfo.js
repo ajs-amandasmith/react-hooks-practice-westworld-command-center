@@ -10,19 +10,21 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ selectedHost, updateActiveStatus }) {
-  const [isActive, setIsActive] = useState(selectedHost.active)
+function HostInfo({ selectedHost, updateActiveStatus, areaData }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
 
   // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
-  const [options] = useState([
-    { key: "some_area", text: "Some Area", value: "some_area" },
-    { key: "another_area", text: "Another Area", value: "another_area" },
-  ]);
+  const cleanHost = selectedHost.area.replace(/_/g, ' ').split().map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+  const cleanArea = areaData.map(area => area.name.replace(/_/g, ' ').split().map(word => word[0].toUpperCase() + word.slice(1)).join(' '))
+  const areaArray = cleanArea.map(area => {
+    return {key: area, text: area, value: area}
+  })
 
-  const [value] = useState("some_area");
+  const [options] = useState(areaArray);
+
+  const [value] = useState(cleanHost);
 
   function handleOptionChange(e, { value }) {
     // the 'value' attribute is given via Semantic's Dropdown component.
@@ -75,7 +77,7 @@ function HostInfo({ selectedHost, updateActiveStatus }) {
             Current Area:
             <Dropdown
               onChange={handleOptionChange}
-              value={value}
+              value={cleanHost}
               options={options}
               selection
             />

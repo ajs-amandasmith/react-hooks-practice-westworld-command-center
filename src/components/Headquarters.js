@@ -4,7 +4,7 @@ import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage"
 
-function Headquarters({ hostData, selectedHost, handleSelectedHost, updateActiveStatus }) {
+function Headquarters({ hostData, selectedHost, handleSelectedHost, updateActiveStatus, areaData }) {
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
@@ -15,7 +15,11 @@ function Headquarters({ hostData, selectedHost, handleSelectedHost, updateActive
         />
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details selectedHost={selectedHost} updateActiveStatus={updateActiveStatus} />
+        <Details 
+          selectedHost={selectedHost} 
+          updateActiveStatus={updateActiveStatus} 
+          areaData={areaData}
+        />
       </Grid.Column>
       <Grid.Column width={3}>
         {/* and here. Take visual cues from the screenshot/video in the Readme. */}

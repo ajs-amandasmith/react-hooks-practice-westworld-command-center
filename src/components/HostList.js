@@ -2,8 +2,8 @@ import React from "react";
 import { Card } from "semantic-ui-react";
 import Host from "./Host";
 
-function HostList({ hostData, selectedHost, handleSelectedHost }) {
-  const displayHosts = hostData.map(host => (
+function HostList({ filteredHosts, selectedHost, handleSelectedHost }) {
+  const displayHosts = filteredHosts.map(host => (
     <Host 
       key={host.id} 
       host={host} 

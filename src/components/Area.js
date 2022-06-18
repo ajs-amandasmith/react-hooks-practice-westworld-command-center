@@ -1,8 +1,13 @@
 import React from "react";
 import "../stylesheets/Area.css";
+import HostList from "./HostList";
 
-function Area({ area, hostData }) {
+function Area({ area, hostData, selectedHost, handleSelectedHost }) {
   const cleanName = area.name.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
+
+  const filteredHosts = hostData.filter(host => host.active === true && host.area === area.name)
+  console.log(filteredHosts)
+
   return (
     <div
       className="area"
@@ -12,6 +17,8 @@ function Area({ area, hostData }) {
         {cleanName}
       </h3>
       {/* See Checkpoint 1 item 2 in the Readme for a clue as to what goes here */}
+      <HostList filteredHosts={filteredHosts} selectedHost={selectedHost} handleSelectedHost={handleSelectedHost} />
+      
     </div>
   );
 }
