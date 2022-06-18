@@ -25,8 +25,7 @@ function App() {
     setSelectedHost(host)
   }
   
-  const updateActiveStatus = (updatedHost) => {
-    console.log(updatedHost)
+  const updateStatus = (updatedHost) => {
     const updatedHosts = hostData.map(host => {
       if (host.id === updatedHost.id) return updatedHost;
       return host;
@@ -48,7 +47,7 @@ function App() {
         hostData={hostData} 
         selectedHost={selectedHost} 
         handleSelectedHost={handleSelectedHost}
-        updateActiveStatus={updateActiveStatus} 
+        updateStatus={updateStatus} 
         areaData={areaData}
       />
     </Segment>

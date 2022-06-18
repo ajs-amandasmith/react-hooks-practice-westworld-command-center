@@ -4,7 +4,6 @@ import HostList from "./HostList";
 
 function ColdStorage({ hostData, selectedHost, handleSelectedHost }) {
   const filteredHosts = hostData.filter(host => host.active === false)
-  
 
   return (
     <Segment.Group className="HQComps">

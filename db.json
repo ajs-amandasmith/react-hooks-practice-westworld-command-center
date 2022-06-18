@@ -7,7 +7,7 @@
       "active": false,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/5/51/Dolores_Abernathy_Vanishing_Point.jpg/revision/latest?cb=20180613181613",
       "gender": "Female",
-      "area": "lowlands",
+      "area": "badlands",
       "authorized": false
     },
     {
@@ -17,7 +17,7 @@
       "active": false,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/b/b6/Bernard_Les_Ecorches.png/revision/latest/scale-to-width-down/310?cb=20180604190617",
       "gender": "Male",
-      "area": "lowlands",
+      "area": "python/_/pass",
       "authorized": false
     },
     {
@@ -67,7 +67,7 @@
       "active": false,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/f/f3/Akane.jpg/revision/latest/scale-to-width-down/310?cb=20180520132523",
       "gender": "Female",
-      "area": "lowlands",
+      "area": "high_plains",
       "authorized": false
     },
     {

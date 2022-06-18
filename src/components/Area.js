@@ -6,7 +6,6 @@ function Area({ area, hostData, selectedHost, handleSelectedHost }) {
   const cleanName = area.name.replace(/_/g, ' ').split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
 
   const filteredHosts = hostData.filter(host => host.active === true && host.area === area.name)
-  console.log(filteredHosts)
 
   return (
     <div
