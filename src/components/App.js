@@ -17,6 +17,16 @@ function App() {
   const handleSelectedHost = (host) => {
     setSelectedHost(host)
   }
+  
+  const updateActiveStatus = (updatedHost) => {
+    console.log(updatedHost)
+    const updatedHosts = hostData.map(host => {
+      if (host.id === updatedHost.id) return updatedHost;
+      return host;
+    })
+    setHostData(updatedHosts);
+    setSelectedHost(updatedHost)
+  }
 
   return (
     <Segment id="app">
@@ -25,7 +35,8 @@ function App() {
       <Headquarters 
         hostData={hostData} 
         selectedHost={selectedHost} 
-        handleSelectedHost={handleSelectedHost} 
+        handleSelectedHost={handleSelectedHost}
+        updateActiveStatus={updateActiveStatus} 
       />
     </Segment>
   );

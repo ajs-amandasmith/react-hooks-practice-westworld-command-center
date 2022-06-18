@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ selectedHost }) {
+function HostInfo({ selectedHost, updateActiveStatus }) {
   const [isActive, setIsActive] = useState(selectedHost.active)
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
@@ -31,7 +31,17 @@ function HostInfo({ selectedHost }) {
   }
 
   function handleRadioChange() {
-    setIsActive(!isActive);
+    fetch(`http://localhost:3001/hosts/${selectedHost.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        active: !selectedHost.active
+    })
+    })
+      .then(r => r.json())
+      .then(host => updateActiveStatus(host))
   }
 
   return (
@@ -56,8 +66,8 @@ function HostInfo({ selectedHost }) {
               {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange}
-                label={isActive ? "Active" : "Decommissioned"}
-                checked={isActive}
+                label={selectedHost.active ? "Active" : "Decommissioned"}
+                checked={selectedHost.active}
                 slider
               />
             </Card.Meta>
