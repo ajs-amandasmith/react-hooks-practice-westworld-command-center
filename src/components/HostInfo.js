@@ -9,8 +9,9 @@ import {
   Divider,
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
+import { Log } from "../services/Log"
 
-function HostInfo({ selectedHost, updateStatus, areaData, hostData }) {
+function HostInfo({ selectedHost, updateStatus, areaData, hostData, updateLogs }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
@@ -39,9 +40,13 @@ function HostInfo({ selectedHost, updateStatus, areaData, hostData }) {
         })
       })
         .then(r => r.json())
-        .then(updatedHost => updateStatus(updatedHost))
+        .then(updatedHost => {
+          updateStatus(updatedHost)
+          updateLogs(Log.notify(`${updatedHost.firstName} set in ${area.name}`))
+        })
     } else {
       alert (`HEY!! You got too many hosts in ${area.name}. The limit for that area is ${area.limit}. You gotta fix that!`)
+      updateLogs(Log.error(`Too many hosts. Cannot add ${selectedHost.firstName} to ${area.name}`))
     }
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
@@ -59,7 +64,14 @@ function HostInfo({ selectedHost, updateStatus, areaData, hostData }) {
     })
     })
       .then(r => r.json())
-      .then(host => updateStatus(host))
+      .then(host => {
+        if (host.active === true) {
+          updateLogs(Log.warn(`Activated ${host.firstName}`))
+        } else {
+          updateLogs(Log.notify(`Decommissioned ${host.firstName}`))
+        }
+        updateStatus(host)
+    })
   }
 
   return (

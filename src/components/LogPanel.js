@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel({ updateStatus, hostData, activateAll }) {
+function LogPanel({ hostData, activateAll, currentLogs, updateLogs }) {
   const [areAllActivated, setAreAllActivated] = useState(false);
+
+
   function dummyLogs() {
     // This is just to show you how this should work. But where should the log data actually get stored?
     // And where should we be creating logs in the first place?
@@ -19,7 +21,17 @@ function LogPanel({ updateStatus, hostData, activateAll }) {
     return logs;
   }
 
-  function handleClick(e) {
+  const displayLogs = currentLogs.map((log, i) => (
+    <p key={i} className={log.type}>{log.msg}</p>
+  ))
+
+  function handleClick() {
+    if (areAllActivated === false) {
+      updateLogs(Log.warn("Activating all hosts!"))
+    }
+    if (areAllActivated === true) {
+      updateLogs(Log.notify("Decommissioning all hosts."))
+    }
     const updatedHosts = hostData.map(host => {
       host.active = !areAllActivated
       setAreAllActivated(!areAllActivated);
@@ -42,11 +54,12 @@ function LogPanel({ updateStatus, hostData, activateAll }) {
   return (
     <Segment className="HQComps" id="logPanel">
       <pre>
-        {dummyLogs().map((log, i) => (
+        {/* {dummyLogs().map((log, i) => (
           <p key={i} className={log.type}>
             {log.msg}
           </p>
-        ))}
+        ))} */}
+        {displayLogs}
       </pre>
 
       {/* Button below is the Activate All/Decommisssion All button */}
