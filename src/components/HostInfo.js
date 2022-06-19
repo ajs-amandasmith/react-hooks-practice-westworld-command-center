@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ selectedHost, updateStatus, areaData }) {
+function HostInfo({ selectedHost, updateStatus, areaData, hostData }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
@@ -24,23 +24,28 @@ function HostInfo({ selectedHost, updateStatus, areaData }) {
 
   const [options] = useState(areaArray);
 
-  const [value] = useState(cleanHost);
-
   function handleOptionChange(e, { value }) {
+    const newValue = value.replace(/ /g, '_').toLowerCase();
+    const hostCount = hostData.filter(host => host.area === newValue).length
+    const area = areaData.filter(area => area.name === newValue)[0]
+    if ((hostCount + 1) <= area.limit) {
+      fetch(`http://localhost:3001/hosts/${selectedHost.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          area: newValue
+        })
+      })
+        .then(r => r.json())
+        .then(updatedHost => updateStatus(updatedHost))
+    } else {
+      alert (`HEY!! You got too many hosts in ${area.name}. The limit for that area is ${area.limit}. You gotta fix that!`)
+    }
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
-    fetch(`http://localhost:3001/hosts/${selectedHost.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        area: value.toLowerCase().replace(/ /g, '_')
-      })
-    })
-      .then(r => r.json())
-      .then(host => updateStatus(host))
   }
 
   function handleRadioChange() {

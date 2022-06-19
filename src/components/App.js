@@ -34,6 +34,11 @@ function App() {
     setSelectedHost(updatedHost)
   }
 
+  const activateAll = (updatedHosts) => {
+    console.log('activateAll', updatedHosts)
+    setHostData(updatedHosts);
+  }
+
   return (
     <Segment id="app">
       {/* What components should go here? Check out Checkpoint 1 of the Readme if you're confused */}
@@ -49,6 +54,7 @@ function App() {
         handleSelectedHost={handleSelectedHost}
         updateStatus={updateStatus} 
         areaData={areaData}
+        activateAll={activateAll}
       />
     </Segment>
   );

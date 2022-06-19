@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel() {
+function LogPanel({ updateStatus, hostData, activateAll }) {
+  const [areAllActivated, setAreAllActivated] = useState(false);
   function dummyLogs() {
     // This is just to show you how this should work. But where should the log data actually get stored?
     // And where should we be creating logs in the first place?
@@ -18,6 +19,26 @@ function LogPanel() {
     return logs;
   }
 
+  function handleClick(e) {
+    const updatedHosts = hostData.map(host => {
+      host.active = !areAllActivated
+      setAreAllActivated(!areAllActivated);
+      return host;
+    })
+    activateAll(updatedHosts)
+    Promise.all(updatedHosts.map(host => {
+      return fetch(`http://localhost:3001/hosts/${host.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          active: !areAllActivated
+        })
+      })   
+    }))
+  }
+
   return (
     <Segment className="HQComps" id="logPanel">
       <pre>
@@ -31,7 +52,10 @@ function LogPanel() {
       {/* Button below is the Activate All/Decommisssion All button */}
       {/* This isn't always going to be the same color...*/}
       {/* Should the button always read "ACTIVATE ALL"? When should it read "DECOMMISSION ALL"? */}
-      <Button fluid color={"red"} content={"ACTIVATE ALL"} />
+      {areAllActivated ? 
+        <Button fluid color={"red"} content={"Decommission All"} onClick={handleClick} /> : 
+        <Button fluid color={"green"} content={"Activate All"} onClick={handleClick} />
+      }
     </Segment>
   );
 }

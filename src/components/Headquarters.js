@@ -3,8 +3,9 @@ import { Grid } from "semantic-ui-react";
 import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage"
+import LogPanel from "./LogPanel";
 
-function Headquarters({ hostData, selectedHost, handleSelectedHost, updateStatus, areaData }) {
+function Headquarters({ hostData, selectedHost, handleSelectedHost, updateStatus, areaData, activateAll }) {
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
@@ -19,10 +20,12 @@ function Headquarters({ hostData, selectedHost, handleSelectedHost, updateStatus
           selectedHost={selectedHost} 
           updateStatus={updateStatus} 
           areaData={areaData}
+          hostData={hostData}
         />
       </Grid.Column>
       <Grid.Column width={3}>
         {/* and here. Take visual cues from the screenshot/video in the Readme. */}
+        <LogPanel updateStatus={updateStatus} hostData={hostData} activateAll={activateAll} />
       </Grid.Column>
     </Grid>
   );
